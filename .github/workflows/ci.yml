@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Slack Notify
+        # You may pin to the exact commit or the version.
+        # uses: rtCamp/action-slack-notify@ae4223259071871559b6e9d08b24a63d71b3f0c0
+        uses: rtCamp/action-slack-notify@v2.1.2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: testing-slack-integration
+          SLACK_MESSAGE: Testing environment deployment process - pre-deploy
+          SLACK_COLOR: FF00EF
+          MSG_MINIMAL: true
