@@ -27,6 +27,7 @@ jobs:
   stage-deploy:
       runs-on: ubuntu-latest
       environment: staging
+      needs: [pre-deploy]
 
       steps:
         - name: Slack Notify
@@ -44,6 +45,7 @@ jobs:
   prod-deploy:
       runs-on: ubuntu-latest
       environment: production
+      needs: [stage-deploy]
 
       steps:
         - name: Slack Notify
@@ -54,6 +56,6 @@ jobs:
             SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
             SLACK_CHANNEL: testing-slack-integration
             SLACK_MESSAGE: Testing environment deployment process - prod deploy
-            SLACK_COLOR: 0010FF
+            SLACK_COLOR: 56FF00
             MSG_MINIMAL: true
             SLACK_FOOTER: Powered by ~hopes and dreams~ trial and error.
